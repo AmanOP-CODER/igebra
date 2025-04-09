@@ -1,7 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import { AcademicCapIcon, DocumentTextIcon, CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
+import { 
+  AcademicCapIcon, 
+  DocumentTextIcon, 
+  CheckCircleIcon, 
+  XCircleIcon, 
+  ArrowPathIcon,
+  BookOpenIcon,
+  UserGroupIcon,
+  HashtagIcon,
+  ChartBarIcon,
+  LightBulbIcon
+} from '@heroicons/react/24/outline';
 
 interface QuizFormData {
   topic: string;
@@ -137,79 +148,107 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-8 flex items-center justify-center gap-2 text-white">
-          <AcademicCapIcon className="h-8 w-8 text-primary" />
-          AI Quiz Generator
-        </h1>
+    <main className="min-h-screen p-8 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <div className="max-w-4xl mx-auto space-y-8">
+        <div className="text-center space-y-4 animate-fade-in">
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 via-violet-500/20 to-purple-500/20 blur-3xl rounded-full"></div>
+            <div className="relative flex flex-col items-center justify-center gap-4">
+              <div className="p-4 rounded-2xl bg-gradient-to-r from-indigo-500/20 via-violet-500/20 to-purple-500/20 backdrop-blur-sm border border-indigo-500/20">
+                <AcademicCapIcon className="h-16 w-16 text-white" />
+              </div>
+              <h1 className="text-6xl font-bold heading-gradient">
+                AI Quiz Generator
+              </h1>
+            </div>
+          </div>
+          <p className="subheading-gradient text-xl font-medium">Create interactive quizzes with AI-powered content</p>
+        </div>
 
         {quizState.questions.length === 0 ? (
-          <form onSubmit={handleSubmit} className="space-y-6 bg-gray-800 p-6 rounded-lg shadow-lg">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-300">Topic</label>
-                <input
-                  type="text"
-                  value={formData.topic}
-                  onChange={(e) => setFormData({ ...formData, topic: e.target.value })}
-                  className="input-field"
-                  required
-                />
+          <form onSubmit={handleSubmit} className="card animate-fade-in">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="input-container">
+                <label className="block text-sm font-medium text-slate-300 mb-2">Topic</label>
+                <div className="relative">
+                  <LightBulbIcon className="input-icon h-6 w-6" />
+                  <input
+                    type="text"
+                    value={formData.topic}
+                    onChange={(e) => setFormData({ ...formData, topic: e.target.value })}
+                    className="input-field pl-12"
+                    placeholder="Enter quiz topic"
+                    required
+                  />
+                </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-300">Subject</label>
-                <input
-                  type="text"
-                  value={formData.subject}
-                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  className="input-field"
-                  required
-                />
+              <div className="input-container">
+                <label className="block text-sm font-medium text-slate-300 mb-2">Subject</label>
+                <div className="relative">
+                  <BookOpenIcon className="input-icon h-6 w-6" />
+                  <input
+                    type="text"
+                    value={formData.subject}
+                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                    className="input-field pl-12"
+                    placeholder="Enter subject"
+                    required
+                  />
+                </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-300">Grade Level</label>
-                <input
-                  type="text"
-                  value={formData.grade}
-                  onChange={(e) => setFormData({ ...formData, grade: e.target.value })}
-                  className="input-field"
-                  required
-                />
+              <div className="input-container">
+                <label className="block text-sm font-medium text-slate-300 mb-2">Grade Level</label>
+                <div className="relative">
+                  <UserGroupIcon className="input-icon h-6 w-6" />
+                  <input
+                    type="text"
+                    value={formData.grade}
+                    onChange={(e) => setFormData({ ...formData, grade: e.target.value })}
+                    className="input-field pl-12"
+                    placeholder="Enter grade level"
+                    required
+                  />
+                </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-300">Number of Questions</label>
-                <input
-                  type="number"
-                  min="1"
-                  max="20"
-                  value={formData.numberOfQuestions}
-                  onChange={(e) => setFormData({ ...formData, numberOfQuestions: parseInt(e.target.value) })}
-                  className="input-field"
-                  required
-                />
+              <div className="input-container">
+                <label className="block text-sm font-medium text-slate-300 mb-2">Number of Questions</label>
+                <div className="relative">
+                  <HashtagIcon className="input-icon h-6 w-6" />
+                  <input
+                    type="number"
+                    min="1"
+                    max="20"
+                    value={formData.numberOfQuestions}
+                    onChange={(e) => setFormData({ ...formData, numberOfQuestions: parseInt(e.target.value) })}
+                    className="input-field pl-12"
+                    required
+                  />
+                </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-300">Difficulty Level</label>
-                <select
-                  value={formData.difficulty}
-                  onChange={(e) => setFormData({ ...formData, difficulty: e.target.value as 'easy' | 'medium' | 'hard' })}
-                  className="select-field"
-                  required
-                >
-                  <option value="easy">Easy</option>
-                  <option value="medium">Medium</option>
-                  <option value="hard">Hard</option>
-                </select>
+              <div className="input-container">
+                <label className="block text-sm font-medium text-slate-300 mb-2">Difficulty Level</label>
+                <div className="relative">
+                  <ChartBarIcon className="input-icon h-6 w-6" />
+                  <select
+                    value={formData.difficulty}
+                    onChange={(e) => setFormData({ ...formData, difficulty: e.target.value as 'easy' | 'medium' | 'hard' })}
+                    className="select-field pl-12"
+                    required
+                  >
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                  </select>
+                </div>
               </div>
             </div>
 
             {error && (
-              <div className="text-red-400 text-sm mt-2">
+              <div className="mt-6 p-4 bg-rose-500/10 border border-rose-500/50 rounded-xl text-rose-400">
                 {error}
               </div>
             )}
@@ -217,47 +256,57 @@ export default function Home() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary mt-8"
             >
-              {loading ? 'Generating Quiz...' : 'Generate Quiz'}
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <ArrowPathIcon className="h-5 w-5 animate-spin" />
+                  Generating Quiz...
+                </span>
+              ) : (
+                'Generate Quiz'
+              )}
             </button>
           </form>
         ) : (
           <div className="space-y-8">
-            <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-              <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2 text-white">
-                <DocumentTextIcon className="h-6 w-6 text-secondary" />
+            <div className="card animate-fade-in">
+              <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2 heading-gradient">
+                <DocumentTextIcon className="h-6 w-6" />
                 Quiz Questions
               </h2>
               <div className="space-y-6">
                 {quizState.questions.map((question, index) => (
-                  <div key={index} className="space-y-2">
-                    <h3 className="text-lg font-medium text-white">{question.question}</h3>
-                    <div className="space-y-2">
-                      {question.options.map((option, optionIndex) => (
-                        <div
-                          key={optionIndex}
-                          className={`p-3 rounded-md cursor-pointer transition-colors ${
-                            quizState.selectedAnswers[index] === option
-                              ? 'bg-primary/20 border-primary'
-                              : 'bg-gray-700 hover:bg-gray-600 border-gray-600'
-                          } border`}
-                          onClick={() => handleAnswerSelect(index, option)}
-                        >
-                          <div className="flex items-center gap-2">
-                            {quizState.showResults && (
-                              <>
-                                {option === question.correctAnswer ? (
-                                  <CheckCircleIcon className="h-5 w-5 text-green-500" />
-                                ) : quizState.selectedAnswers[index] === option ? (
-                                  <XCircleIcon className="h-5 w-5 text-red-500" />
-                                ) : null}
-                              </>
-                            )}
-                            <span className="text-gray-300">{option}</span>
+                  <div key={index} className="question-card animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+                    <h3 className="text-xl font-medium text-white mb-4">{question.question}</h3>
+                    <div className="space-y-3">
+                      {question.options.map((option, optionIndex) => {
+                        const isSelected = quizState.selectedAnswers[index] === option;
+                        const isCorrect = quizState.showResults && option === question.correctAnswer;
+                        const isIncorrect = quizState.showResults && isSelected && option !== question.correctAnswer;
+
+                        return (
+                          <div
+                            key={optionIndex}
+                            className={`option-card ${
+                              isSelected ? 'selected-option' : ''
+                            } ${isCorrect ? 'correct-option' : ''} ${
+                              isIncorrect ? 'incorrect-option' : ''
+                            }`}
+                            onClick={() => !quizState.showResults && handleAnswerSelect(index, option)}
+                          >
+                            <div className="flex items-center gap-3">
+                              {quizState.showResults && (
+                                <>
+                                  {isCorrect && <CheckCircleIcon className="h-6 w-6 text-emerald-500" />}
+                                  {isIncorrect && <XCircleIcon className="h-6 w-6 text-rose-500" />}
+                                </>
+                              )}
+                              <span className="text-slate-300">{option}</span>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 ))}
@@ -268,23 +317,31 @@ export default function Home() {
               <button
                 onClick={handleSubmitQuiz}
                 disabled={Object.keys(quizState.selectedAnswers).length !== quizState.questions.length}
-                className="w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="btn-primary"
               >
                 Submit Quiz
               </button>
             ) : (
-              <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-                <h3 className="text-xl font-semibold text-white mb-4">Quiz Results</h3>
-                <p className="text-gray-300">
-                  Your score: {quizState.score} out of {quizState.questions.length} (
-                  {Math.round((quizState.score / quizState.questions.length) * 100)}%)
-                </p>
-                <button
-                  onClick={() => setQuizState({ questions: [], selectedAnswers: {}, showResults: false, score: 0 })}
-                  className="mt-4 w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                >
-                  Generate New Quiz
-                </button>
+              <div className="card animate-fade-in">
+                <h3 className="text-2xl font-semibold mb-6 heading-gradient">
+                  Quiz Results
+                </h3>
+                <div className="space-y-6">
+                  <div className="text-center p-8 bg-slate-800/50 rounded-xl">
+                    <p className="text-5xl font-bold text-white mb-2">
+                      {quizState.score}/{quizState.questions.length}
+                    </p>
+                    <p className="text-slate-400 text-xl">
+                      {Math.round((quizState.score / quizState.questions.length) * 100)}% Correct
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setQuizState({ questions: [], selectedAnswers: {}, showResults: false, score: 0 })}
+                    className="btn-primary"
+                  >
+                    Generate New Quiz
+                  </button>
+                </div>
               </div>
             )}
           </div>
