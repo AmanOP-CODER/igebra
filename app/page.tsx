@@ -20,6 +20,7 @@ interface QuizFormData {
   grade: string;
   numberOfQuestions: number;
   difficulty: 'easy' | 'medium' | 'hard';
+  additionalInfo: string;
 }
 
 interface QuizQuestion {
@@ -42,6 +43,7 @@ export default function Home() {
     grade: '',
     numberOfQuestions: 5,
     difficulty: 'medium',
+    additionalInfo: '',
   });
   const [quizState, setQuizState] = useState<QuizState>({
     questions: [],
@@ -58,7 +60,7 @@ export default function Home() {
     const questions: QuizQuestion[] = [];
     
     const questionElements = doc.querySelectorAll('h3');
-    questionElements.forEach((questionElement, index) => {
+    questionElements.forEach((questionElement) => {
       const question = questionElement.textContent || '';
       const optionsList = questionElement.nextElementSibling;
       const options: string[] = [];
@@ -145,6 +147,27 @@ export default function Home() {
       showResults: true,
       score,
     }));
+  };
+
+  const getImprovementSuggestions = () => {
+    const percentage = (quizState.score / quizState.questions.length) * 100;
+    if (percentage < 70) {
+      return (
+        <div className="p-4 bg-slate-800/50 rounded-xl border border-slate-700/50">
+          <h4 className="text-lg font-medium text-white mb-2">Areas for Improvement</h4>
+          <p className="text-slate-300">
+            You scored {quizState.score} out of {quizState.questions.length} ({Math.round(percentage)}%).
+            Consider reviewing the following areas:
+          </p>
+          <ul className="list-disc list-inside mt-2 text-slate-300">
+            <li>Review the basic concepts</li>
+            <li>Practice more questions</li>
+            <li>Seek additional resources or explanations</li>
+          </ul>
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
@@ -247,6 +270,24 @@ export default function Home() {
               </div>
             </div>
 
+            <div className="mt-8">
+              <label className="block text-sm font-medium text-slate-300 mb-2">Additional Information (Optional)</label>
+              <div className="relative">
+                <textarea
+                  value={formData.additionalInfo}
+                  onChange={(e) => setFormData({ ...formData, additionalInfo: e.target.value })}
+                  className="w-full rounded-xl bg-slate-800/50 border-slate-700 text-white shadow-sm 
+                           focus:border-indigo-500 focus:ring-indigo-500 transition-all duration-200
+                           placeholder-slate-400 text-lg py-4 px-6 min-h-[120px]
+                           hover:bg-slate-800/70 focus:bg-slate-800/70"
+                  placeholder="Add any specific requirements, focus areas, or additional context for the quiz..."
+                />
+              </div>
+              <p className="mt-2 text-sm text-slate-400">
+                This information will help generate more relevant and focused questions.
+              </p>
+            </div>
+
             {error && (
               <div className="mt-6 p-4 bg-rose-500/10 border border-rose-500/50 rounded-xl text-rose-400">
                 {error}
@@ -335,6 +376,9 @@ export default function Home() {
                       {Math.round((quizState.score / quizState.questions.length) * 100)}% Correct
                     </p>
                   </div>
+
+                  {getImprovementSuggestions()}
+
                   <button
                     onClick={() => setQuizState({ questions: [], selectedAnswers: {}, showResults: false, score: 0 })}
                     className="btn-primary"
