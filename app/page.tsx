@@ -391,6 +391,11 @@ export default function Home() {
           </div>
         )}
       </div>
+      <div className="mt-16 text-center">
+        <p className="text-slate-500 text-sm font-medium">
+          Made with ❤️ by <span className="text-slate-400">Aman</span>
+        </p>
+      </div>
     </main>
   );
 } 
